@@ -10,12 +10,38 @@
     <p>Manage your tasks efficiently and stay organized.</p>
     <ul class="list-disc pl-5 ">
         <li><a href="tasks.html">View Tasks</a></li>
-        <li><a href="add_task.html">Add New Task</a></li>
+        <li><a href="add-task.html">Add New Task</a></li>
         <li><a href="settings.html">Settings</a></li>
     </ul>
     
 
-    
-    
+    <section id="add-task.html">
+
+        <form action="add-task.html" method="POST">
+
+            <label for="task-title">Task Title:</label>
+            <input type="text"
+             id="task-title" 
+             placeholder="Enter the task name"
+             name="title" required>
+
+            <label for="task-description">Description:</label>
+            <textarea id="task-description"
+             name="description"
+              placeholder="Enter the task description"
+              >
+            </textarea>
+
+            <label for="task-title">Priority:</label>
+            <select id="task-title" name="priority">
+                <option value="low">Low</option>
+                <option value="medium">Medium</option>
+                <option value="high">High</option>
+            </select>
+
+            <button type="submit">Add Task</button>
+        </form>
+
+    </section>
 </body>
 </html>
