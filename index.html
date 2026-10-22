@@ -9,8 +9,9 @@
     <h1 >Welcome to Your Personal Task Manager</h1>
     <p>Manage your tasks efficiently and stay organized.</p>
     <ul class="list-disc pl-5 ">
-        <li><a href="tasks.html">View Tasks</a></li>
+        
         <li><a href="add-task.html">Add New Task</a></li>
+        <li><a href="tasks.html">View Tasks</a></li>
         <li><a href="settings.html">Settings</a></li>
     </ul>
     
@@ -26,24 +27,42 @@
              name="title" required>
 
             <label for="task-description">Description:</label>
-            <textarea id="task-description"
+            <textarea 
+            id="task-description"
              name="description"
               placeholder="Enter the task description"
               >
             </textarea>
 
             <label for="task-title">Priority:</label>
-            <select id="task-title" name="priority">
+            <select 
+            id="task-title"
+             name="priority">
                 <option value="low">Low</option>
                 <option value="medium">Medium</option>
                 <option value="high">High</option>
             </select>
 
             <label for="date">Due date</label>
-            <input type="date" id="date" name="due_date">
+            <input type="date" 
+            id="date"
+             name="due_date">
 
             <button type="submit">Add Task</button>
         </form>
+
+    </section>
+
+    <section id="task.html">
+        <h2>View Tasks</h2>
+        <span id="task-list">
+            <!-- Task list will be dynamically populated here -->
+            <button>Complete</button>
+             <button>Edit</button>
+             <button>Delete</button>
+
+
+        </span>
 
     </section>
 </body>
