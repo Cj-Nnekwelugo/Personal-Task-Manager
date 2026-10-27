@@ -19,3 +19,11 @@ const cancelEditBtn = document.getElementById("cancel-edit-btn");
 
 const taskFilter = document.getElementById("task-filter");
 
+
+
+let tasks = [];
+
+let editingTaskId = null;
+
+const STORAGE_KEY = "personal-task-manager-tasks";
+
