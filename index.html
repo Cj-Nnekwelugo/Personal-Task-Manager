@@ -3,75 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Personal Task Manager</title>
-    <link rel="stylesheet" href="src/output.css">
-    <script src="index.js" defer></script>
+
+
+<title>Personal Task Manager</title>
+
+<link rel="stylesheet" href="src/output.css">
+<script src="index.js" defer></script>
+
+
 </head>
-<body class="bg-gray-100" >
-    <h1 >Welcome to Your Personal Task Manager</h1>
-    <p>Manage your tasks efficiently and stay organized.</p>
-    <ul class="list-disc pl-5 ">
-        
-        <li><a href="add-task.html">Add New Task</a></li>
-        <li><a href="tasks.html">View Tasks</a></li>
-        <li><a href="settings.html">Settings</a></li>
-    </ul>
-    
 
-    <section id="add-task.html">
+<body class="min-h-screen bg-gray-100 p-4 text-gray-800">
 
-        <form action="add-task.html" method="POST">
 
-            <label for="task-title">Task Title:</label>
-            <input class="border"
-            type="text"
-             id="task-title" 
-             placeholder="Enter the task name"
-             name="title" required>
+<main class="mx-auto max-w-3xl">
 
-            <label for="task-description">Description:</label>
-            <textarea 
-            class="border"
-            id="task-description"
-             name="description"
-              placeholder="Enter the task description"
-              >
-            </textarea>
+    <header class="mb-8">
+        <h1 class="mb-2 text-3xl font-bold">
+            Welcome to Your Personal Task Manager
+        </h1>
 
-            <label for="task-priority">Priority:</label>
-            <select 
-            class="border"
-            id="task-priority"
-             name="priority">
-                <option value="low">Low</option>
-                <option value="medium">Medium</option>
-                <option value="high">High</option>
-            </select>
+        <p class="text-gray-600">
+            Manage your tasks efficiently and stay organized.
+        </p>
 
-            <label for="date">Due date</label>
-            <input type="date" 
-            id="date"
-            class="border"
-            name="due_date">
+        <nav class="mt-4">
+            <ul class="flex flex-wrap gap-4">
+                <li><a href="#add-task" class="text-blue-600 underline">Add New Task</a></li>
+                <li><a href="#view-tasks" class="text-blue-600 underline">View Tasks</a></li>
+            </ul>
+        </nav>
+    </header>
 
-            <button 
-            id="add-task-btn"
-            type="submit">Add Task</button>
+    <section id="add-task" class="mb-8 rounded-lg bg-white p-6 shadow">
+
+        <h2 class="mb-4 text-xl font-bold">Add a Task</h2>
+
+        <form id="task-form">
+
+            <div class="mb-4">
+                <label for="task-title" class="mb-1 block font-medium">
+                    Task Title:
+                </label>
+
+                <input
+                    class="w-full rounded border border-gray-300 p-2"
+                    type="text"
+                    id="task-title"
+                    name="title"
+                    placeholder="Enter the task name"
+                    required
+                    maxlength="100"
+                >
+            </div>
+
+            <div class="mb-4">
+                <label for="task-description" class="mb-1 block font-medium">
+                    Description:
+                </label>
+
+                <textarea
+                    class="w-full rounded border border-gray-300 p-2"
+                    id="task-description"
+                    name="description"
+                    placeholder="Enter the task description"
+                    rows="4"
+                    maxlength="1000"
+                ></textarea>
+            </div>
+
+            <div class="mb-4">
+                <label for="task-priority" class="mb-1 block font-medium">
+                    Priority:
+                </label>
+
+                <select
+                    class="w-full rounded border border-gray-300 p-2"
+                    id="task-priority"
+                    name="priority"
+                >
+                    <option value="low">Low</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="high">High</option>
+                </select>
+            </div>
+
+            <div class="mb-4">
+                <label for="date" class="mb-1 block font-medium">
+                    Due Date:
+                </label>
+
+                <input
+                    type="date"
+                    id="date"
+                    name="due_date"
+                    class="w-full rounded border border-gray-300 p-2"
+                >
+            </div>
+
+            <button
+                id="add-task-btn"
+                type="submit"
+                class="rounded bg-blue-600 px-4 py-2 font-medium text-white hover:bg-blue-700"
+            >
+                Add Task
+            </button>
+
+            <button
+                id="cancel-edit-btn"
+                type="button"
+                class="ml-2 hidden rounded bg-gray-500 px-4 py-2 text-white hover:bg-gray-600"
+            >
+                Cancel Edit
+            </button>
+
         </form>
 
-    </section>
-
-    <section id="view-tasks.html">
-        <h2>View Tasks</h2>
-        <span id="task-list">
-            <!-- Task list will be dynamically populated here -->
-            <button>Complete</button>
-             <button>Edit</button>
-             <button>Delete</button>
-
-
-        </span>
+        <p id="form-status" class="mt-3" role="status" aria-live="polite"></p>
 
     </section>
+
+    <section id="view-tasks" class="rounded-lg bg-white p-6 shadow">
+
+        <h2 class="mb-4 text-xl font-bold">Your Tasks</h2>
+
+        <div class="mb-4">
+            <label for="task-filter" class="mb-1 block font-medium">
+                Filter Tasks:
+            </label>
+
+            <select
+                id="task-filter"
+                class="rounded border border-gray-300 p-2"
+            >
+                <option value="all">All Tasks</option>
+                <option value="pending">Pending Tasks</option>
+                <option value="completed">Completed Tasks</option>
+            </select>
+        </div>
+
+        <p id="task-count" class="mb-4 text-gray-600"></p>
+
+        <p id="empty-message" class="text-gray-500">
+            You haven't added any tasks yet.
+        </p>
+
+        <div id="task-list" class="space-y-4">
+            <!-- JavaScript will display tasks here. -->
+        </div>
+
+    </section>
+
+</main>
+
+
 </body>
 </html>
