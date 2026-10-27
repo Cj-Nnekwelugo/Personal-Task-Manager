@@ -79,3 +79,14 @@ JSON.stringify(tasks)
 
 }
 
+
+
+function showMessage(message, isError = false) {
+formStatus.textContent = message;
+
+formStatus.className = isError
+    ? "mt-3 text-red-600"
+    : "mt-3 text-green-600";
+
+}
+
