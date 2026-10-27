@@ -27,3 +27,33 @@ let editingTaskId = null;
 
 const STORAGE_KEY = "personal-task-manager-tasks";
 
+
+function loadTasks() {
+try {
+const savedTasks = localStorage.getItem(STORAGE_KEY);
+
+    if (savedTasks === null) {
+        tasks = [];
+        return;
+    }
+
+    const parsedTasks = JSON.parse(savedTasks);
+
+    if (!Array.isArray(parsedTasks)) {
+        throw new Error("Saved tasks are not in the expected format.");
+    }
+
+    tasks = parsedTasks;
+} catch (error) {
+    console.error("Could not load saved tasks:", error);
+
+    tasks = [];
+
+    showMessage(
+        "Saved tasks could not be loaded. Check the browser console for details.",
+        true
+    );
+}
+
+}
+
