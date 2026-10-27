@@ -90,3 +90,15 @@ formStatus.className = isError
 
 }
 
+
+function resetForm() {
+taskForm.reset();
+
+editingTaskId = null;
+
+addTaskBtn.textContent = "Add Task";
+
+cancelEditBtn.classList.add("hidden");
+
+}
+
