@@ -102,3 +102,86 @@ cancelEditBtn.classList.add("hidden");
 
 }
 
+
+taskForm.addEventListener("submit", function (event) {
+event.preventDefault();
+
+const title = taskTitle.value.trim();
+const description = taskDescription.value.trim();
+const priority = taskPriority.value;
+const dueDate = taskDate.value;
+
+
+
+if (title === "") {
+    showMessage("Please enter a task title.", true);
+    taskTitle.focus();
+    return;
+}
+
+
+
+if (!["low", "medium", "high"].includes(priority)) {
+    showMessage("Please select a valid priority.", true);
+    return;
+}
+
+
+
+if (editingTaskId !== null) {
+    const taskIndex = tasks.findIndex(function (task) {
+        return task.id === editingTaskId;
+    });
+
+    if (taskIndex === -1) {
+        showMessage("This task could not be found.", true);
+        resetForm();
+        return;
+    }
+
+    const oldTask = tasks[taskIndex];
+
+    tasks[taskIndex] = {
+        ...oldTask,
+        title: title,
+        description: description,
+        priority: priority,
+        dueDate: dueDate
+    };
+
+    if (!saveTasks()) {
+        tasks[taskIndex] = oldTask;
+        return;
+    }
+
+    showMessage("Task updated successfully.");
+
+} else {
+  
+
+    const newTask = {
+        id: createTaskId(),
+        title: title,
+        description: description,
+        priority: priority,
+        dueDate: dueDate,
+        completed: false,
+        createdAt: new Date().toISOString()
+    };
+
+    tasks.push(newTask);
+
+    if (!saveTasks()) {
+        tasks.pop();
+        return;
+    }
+
+    showMessage("Task added successfully.");
+}
+
+resetForm();
+
+renderTasks();
+
+});
+
