@@ -57,3 +57,25 @@ const savedTasks = localStorage.getItem(STORAGE_KEY);
 
 }
 
+
+function saveTasks() {
+try {
+localStorage.setItem(
+STORAGE_KEY,
+JSON.stringify(tasks)
+);
+
+    return true;
+} catch (error) {
+    console.error("Could not save tasks:", error);
+
+    showMessage(
+        "Your changes could not be saved. Check your browser storage settings.",
+        true
+    );
+
+    return false;
+}
+
+}
+
