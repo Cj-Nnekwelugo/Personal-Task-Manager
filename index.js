@@ -457,3 +457,12 @@ taskTitle.focus();
 
 }
 
+
+
+cancelEditBtn.addEventListener("click", function () {
+resetForm();
+
+showMessage("Editing cancelled.");
+
+});
+
