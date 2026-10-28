@@ -186,10 +186,201 @@ renderTasks();
 });
 
 
+
 function createTaskId() {
 return (
 Date.now().toString(36) +
 Math.random().toString(36).slice(2)
 );
+}
+
+
+
+function renderTasks() {
+taskList.replaceChildren();
+
+let filteredTasks = tasks;
+
+// Apply the selected filter.
+
+if (taskFilter.value === "pending") {
+    filteredTasks = tasks.filter(function (task) {
+        return !task.completed;
+    });
+}
+
+if (taskFilter.value === "completed") {
+    filteredTasks = tasks.filter(function (task) {
+        return task.completed;
+    });
+}
+
+// Display the empty-state message when needed.
+
+emptyMessage.classList.toggle(
+    "hidden",
+    filteredTasks.length > 0
+);
+
+if (tasks.length === 0) {
+    emptyMessage.textContent = "You haven't added any tasks yet.";
+} else if (filteredTasks.length === 0) {
+    emptyMessage.textContent = "No tasks match this filter.";
+}
+
+// Display task statistics.
+
+const completedCount = tasks.filter(function (task) {
+    return task.completed;
+}).length;
+
+const pendingCount = tasks.length - completedCount;
+
+taskCount.textContent =
+    "Total: " + tasks.length +
+    " | Pending: " + pendingCount +
+    " | Completed: " + completedCount;
+
+// Create a card for each task.
+
+filteredTasks.forEach(function (task) {
+    const card = document.createElement("article");
+
+    card.className =
+        "rounded-lg border border-gray-200 p-4 shadow-sm";
+
+    // Task title.
+
+    const title = document.createElement("h3");
+
+    title.className = "mb-2 text-lg font-bold";
+
+    title.textContent = task.title;
+
+    if (task.completed) {
+        title.classList.add("line-through", "text-gray-500");
+    }
+
+    card.appendChild(title);
+
+    // Task description.
+
+    if (task.description) {
+        const description = document.createElement("p");
+
+        description.className = "mb-2 text-gray-600";
+
+        description.textContent = task.description;
+
+        card.appendChild(description);
+    }
+
+    // Task priority.
+
+    const priority = document.createElement("p");
+
+    priority.className = "mb-2";
+
+    priority.textContent =
+        "Priority: " + capitalize(task.priority);
+
+    if (task.priority === "high") {
+        priority.classList.add("font-semibold", "text-red-600");
+    } else if (task.priority === "medium") {
+        priority.classList.add("text-yellow-700");
+    } else {
+        priority.classList.add("text-green-700");
+    }
+
+    card.appendChild(priority);
+
+    // Task due date.
+
+    if (task.dueDate) {
+        const dueDate = document.createElement("p");
+
+        dueDate.className = "mb-2 text-sm text-gray-600";
+
+        dueDate.textContent = "Due date: " + task.dueDate;
+
+        card.appendChild(dueDate);
+    }
+
+    // Task status.
+
+    const status = document.createElement("p");
+
+    status.className = "mb-3 text-sm";
+
+    status.textContent = task.completed
+        ? "Status: Completed"
+        : "Status: Pending";
+
+    card.appendChild(status);
+
+    // Create the task action buttons.
+
+    const buttonContainer = document.createElement("div");
+
+    buttonContainer.className = "flex flex-wrap gap-2";
+
+    // Complete or reopen button.
+
+    const completeBtn = document.createElement("button");
+
+    completeBtn.type = "button";
+
+    completeBtn.className =
+        "rounded bg-green-600 px-3 py-2 text-white hover:bg-green-700";
+
+    completeBtn.textContent = task.completed
+        ? "Reopen"
+        : "Complete";
+
+    completeBtn.addEventListener("click", function () {
+        toggleTaskCompletion(task.id);
+    });
+
+    buttonContainer.appendChild(completeBtn);
+
+    // Edit button.
+
+    const editBtn = document.createElement("button");
+
+    editBtn.type = "button";
+
+    editBtn.className =
+        "rounded bg-blue-600 px-3 py-2 text-white hover:bg-blue-700";
+
+    editBtn.textContent = "Edit";
+
+    editBtn.addEventListener("click", function () {
+        editTask(task.id);
+    });
+
+    buttonContainer.appendChild(editBtn);
+
+    // Delete button.
+
+    const deleteBtn = document.createElement("button");
+
+    deleteBtn.type = "button";
+
+    deleteBtn.className =
+        "rounded bg-red-600 px-3 py-2 text-white hover:bg-red-700";
+
+    deleteBtn.textContent = "Delete";
+
+    deleteBtn.addEventListener("click", function () {
+        deleteTask(task.id);
+    });
+
+    buttonContainer.appendChild(deleteBtn);
+
+    card.appendChild(buttonContainer);
+
+    taskList.appendChild(card);
+});
+
 }
 
