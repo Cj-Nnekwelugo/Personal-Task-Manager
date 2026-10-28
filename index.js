@@ -415,3 +415,45 @@ renderTasks();
 
 }
 
+
+
+function editTask(taskId) {
+const task = tasks.find(function (task) {
+return task.id === taskId;
+});
+
+if (!task) {
+    showMessage("Task not found.", true);
+    return;
+}
+
+// Put the existing task details into the form.
+
+taskTitle.value = task.title;
+
+taskDescription.value = task.description;
+
+taskPriority.value = task.priority;
+
+taskDate.value = task.dueDate;
+
+// Remember which task is being edited.
+
+editingTaskId = task.id;
+
+addTaskBtn.textContent = "Update Task";
+
+cancelEditBtn.classList.remove("hidden");
+
+showMessage("Edit your task and select Update Task.");
+
+// Move the user to the form.
+
+document.getElementById("add-task").scrollIntoView({
+    behavior: "smooth"
+});
+
+taskTitle.focus();
+
+}
+
