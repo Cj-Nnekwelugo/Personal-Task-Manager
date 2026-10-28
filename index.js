@@ -384,3 +384,34 @@ filteredTasks.forEach(function (task) {
 
 }
 
+
+
+function toggleTaskCompletion(taskId) {
+const task = tasks.find(function (task) {
+return task.id === taskId;
+});
+
+if (!task) {
+    showMessage("Task not found.", true);
+    return;
+}
+
+const previousStatus = task.completed;
+
+task.completed = !task.completed;
+
+if (!saveTasks()) {
+    task.completed = previousStatus;
+    return;
+}
+
+showMessage(
+    task.completed
+        ? "Task marked as completed."
+        : "Task reopened."
+);
+
+renderTasks();
+
+}
+
