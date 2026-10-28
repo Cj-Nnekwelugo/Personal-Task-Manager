@@ -524,6 +524,10 @@ renderTasks();
 
 
 
+loadTasks();
+
+renderTasks();
+
 
 
 
