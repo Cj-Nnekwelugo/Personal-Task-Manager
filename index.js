@@ -466,3 +466,47 @@ showMessage("Editing cancelled.");
 
 });
 
+
+function deleteTask(taskId) {
+const task = tasks.find(function (task) {
+return task.id === taskId;
+});
+
+if (!task) {
+    showMessage("Task not found.", true);
+    return;
+}
+
+const confirmed = window.confirm(
+    'Are you sure you want to delete "' +
+    task.title +
+    '"?'
+);
+
+if (!confirmed) {
+    return;
+}
+
+const previousTasks = tasks;
+
+tasks = tasks.filter(function (task) {
+    return task.id !== taskId;
+});
+
+if (!saveTasks()) {
+    tasks = previousTasks;
+    return;
+}
+
+// If the deleted task was being edited, reset the form.
+
+if (editingTaskId === taskId) {
+    resetForm();
+}
+
+showMessage("Task deleted successfully.");
+
+renderTasks();
+
+}
+
